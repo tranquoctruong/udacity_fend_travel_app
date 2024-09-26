@@ -21,3 +21,6 @@ Fend Travel là một ứng dụng web cho phép người dùng lập kế hoạ
    ```bash
    git clone hhttps://github.com/tranquoctruong/udacity_fend_travel_app.git
    cd udacity_fend_travel_app
+   npm install --save-dev webpack webpack-cli
+   npm run build
+   npm run start

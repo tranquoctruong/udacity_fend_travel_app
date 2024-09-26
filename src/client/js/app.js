@@ -9,6 +9,11 @@ const fetchCountries = async () => {
 };
 
 const fetchWeather = async (city) => {
+    if (!city) {
+        console.error("City input is empty.");
+        return; // Exit if no city is provided
+    }
+    
     const apiKey = 'YOUR_WEATHER_API_KEY'; // Thay YOUR_WEATHER_API_KEY bằng API key của bạn
     try {
         const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`);
@@ -34,6 +39,11 @@ const displayCountries = (countries) => {
 // Tính năng tìm kiếm
 document.getElementById('search-input').addEventListener('input', (event) => {
     const searchTerm = event.target.value.toLowerCase();
+    if (searchTerm.trim() === "") {
+        // Clear country list if search input is empty
+        document.getElementById('country-list').innerHTML = '';
+        return;
+    }
     const countries = document.querySelectorAll('.country');
     countries.forEach(country => {
         const countryName = country.querySelector('h3').textContent.toLowerCase();

@@ -1,68 +1,60 @@
-const fetchCountries = async () => {
+const countrySelect = document.getElementById('country');
+const dateInput = document.getElementById('date');
+const weatherInfo = document.getElementById('weatherInfo');
+const getWeatherButton = document.getElementById('getWeather');
+
+// Lấy danh sách quốc gia từ server Node.js
+async function fetchCountries() {
     try {
-        const response = await fetch('/api/countries');
+        const response = await fetch('http://localhost:3000/api/countries');
         const countries = await response.json();
-        displayCountries(countries);
+        countries.forEach(country => {
+            const option = document.createElement('option');
+            option.value = country.alpha2Code;
+            option.textContent = country.name;
+            countrySelect.appendChild(option);
+        });
     } catch (error) {
-        console.error("Error fetching countries:", error);
+        console.error('Error fetching countries:', error);
     }
-};
+}
 
-const fetchWeather = async (city) => {
-    if (!city) {
-        console.error("City input is empty.");
-        return; // Exit if no city is provided
-    }
-    
-    const apiKey = 'YOUR_WEATHER_API_KEY'; // Thay YOUR_WEATHER_API_KEY bằng API key của bạn
+// Lấy thông tin thời tiết từ server Node.js
+async function fetchWeather(countryCode) {
     try {
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`);
-        const weather = await response.json();
-        displayWeather(weather);
+        const cityName = 'Ha Noi';
+        const response = await fetch(`http://localhost:3000/api/weather?cityName=${cityName}&countryCode=${countryCode}`);
+        const weatherData = await response.json();
+        displayWeather(weatherData);
     } catch (error) {
-        console.error("Error fetching weather:", error);
+        console.error('Error fetching weather:', error);
     }
-};
+}
 
-const displayCountries = (countries) => {
-    const countryListDiv = document.getElementById('country-list');
-    countryListDiv.innerHTML = countries.map(country => `
-        <div class="country" onclick="fetchWeather('${country.capital}')">
-            <h3>${country.name}</h3>
-            <p>Capital: ${country.capital}</p>
-            <p>Population: ${country.population}</p>
-            <img src="${country.flag}" alt="Flag of ${country.name}" style="width: 50px;">
-        </div>
-    `).join('');
-};
-
-// Tính năng tìm kiếm
-document.getElementById('search-input').addEventListener('input', (event) => {
-    const searchTerm = event.target.value.toLowerCase();
-    if (searchTerm.trim() === "") {
-        // Clear country list if search input is empty
-        document.getElementById('country-list').innerHTML = '';
-        return;
-    }
-    const countries = document.querySelectorAll('.country');
-    countries.forEach(country => {
-        const countryName = country.querySelector('h3').textContent.toLowerCase();
-        country.style.display = countryName.includes(searchTerm) ? 'block' : 'none';
-    });
-});
-
-const displayWeather = (weather) => {
-    const weatherInfoDiv = document.getElementById('weather-info');
-    if (weather.cod === 200) {
-        weatherInfoDiv.innerHTML = `
-            <h3>${weather.name}</h3>
-            <p>Temperature: ${weather.main.temp} °C</p>
-            <p>Weather: ${weather.weather[0].description}</p>
+// Hiển thị thông tin thời tiết
+function displayWeather(data) {
+    if (data.cod === 200) {
+        weatherInfo.innerHTML = `
+            <p>Nhiệt độ: ${data.main.temp} °C</p>
+            <p>Thời tiết: ${data.weather[0].description}</p>
+            <p>Địa điểm: ${data.name}, ${data.sys.country}</p>
         `;
     } else {
-        weatherInfoDiv.innerHTML = `<p>Weather information not available.</p>`;
+        weatherInfo.textContent = 'Không tìm thấy thông tin thời tiết.';
     }
-};
+}
 
-// Fetch countries when the app loads
+// Thêm sự kiện cho nút xem thời tiết
+getWeatherButton.addEventListener('click', () => {
+    const selectedCountry = countrySelect.value;
+    const selectedDate = dateInput.value;
+
+    if (selectedCountry && selectedDate) {
+        fetchWeather(selectedCountry, selectedDate);
+    } else {
+        alert('Vui lòng chọn quốc gia và ngày.');
+    }
+});
+
+// Khởi động ứng dụng
 fetchCountries();

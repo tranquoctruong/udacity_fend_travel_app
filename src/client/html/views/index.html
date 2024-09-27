@@ -11,17 +11,16 @@
         <p>Khám phá thông tin về các quốc gia và thời tiết!</p>
     </header>
     <main id="app">
-        <div class="container">
-            <section id="country-section">
-                <h2>Thông tin về các quốc gia</h2>
-                <input type="text" id="search-input" placeholder="Tìm kiếm quốc gia...">
-                <div id="country-list" class="country-list"></div>
-            </section>
-            <section id="weather-section">
-                <h2>Thời tiết hiện tại</h2>
-                <div id="weather-info" class="weather-info"></div>
-            </section>
-        </div>
+        <label for="country">Chọn quốc gia:</label>
+        <select id="country"></select>
+    
+        <label for="date">Chọn ngày:</label>
+        <input type="date" id="date" />
+
+        <button id="getWeather">Xem thời tiết</button>
+
+        <h2>Thông tin thời tiết:</h2>
+        <div id="weatherInfo"></div>
     </main>
     <footer>
         <p>&copy; 2024 FEND Travel App. Tất cả quyền được bảo lưu.</p>

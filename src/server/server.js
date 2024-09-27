@@ -29,15 +29,7 @@ app.get('/api/weather', async (req, res) => {
         res.json(response.data);
     } catch (error) {
         const defaultWeatherData = {
-            main: {
-                temp: 30,
-                pressure: 1013,
-                humidity: 70,
-            },
-            weather: [{ description: "clear sky", icon: "01d" }],
-            name: "Ha Noi",
-            sys: { country: "VN" },
-            cod: 200
+            cod: 404
         };
 
         // Trả về thông tin mặc định

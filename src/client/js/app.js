@@ -22,7 +22,7 @@ async function fetchCountries() {
 // Lấy thông tin thời tiết từ server Node.js
 async function fetchWeather(countryCode) {
     try {
-        const cityName = 'Ha Noi';
+        const cityName = '';
         const response = await fetch(`http://localhost:3000/api/weather?cityName=${cityName}&countryCode=${countryCode}`);
         const weatherData = await response.json();
         displayWeather(weatherData);

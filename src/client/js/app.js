@@ -49,13 +49,25 @@ module.exports = { fetchCountries, fetchWeather, displayWeather };
 
 fetchCountries();
 
-    getWeatherButton.addEventListener('click', () => {
-        const selectedCountry = countrySelect.value;
-        const selectedDate = dateInput.value;
+getWeatherButton.addEventListener('click', () => {
+    const selectedCountry = countrySelect.value;
+    const selectedDate = dateInput.value;
 
-        if (selectedCountry && selectedDate) {
-            fetchWeather(selectedCountry, selectedDate);
-        } else {
-            alert('Vui lòng chọn quốc gia và ngày.');
-        }
+    if (selectedCountry && selectedDate) {
+        fetchWeather(selectedCountry, selectedDate);
+    } else {
+        alert('Vui lòng chọn quốc gia và ngày.');
+    }
+});
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js')
+            .then(registration => {
+                console.log('Service Worker đã được đăng ký:', registration.scope);
+            })
+            .catch(error => {
+                console.error('Đăng ký Service Worker thất bại:', error);
+            });
     });
+}

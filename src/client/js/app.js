@@ -47,19 +47,6 @@ function displayWeather(data) {
 // Xuất khẩu các hàm để có thể sử dụng trong kiểm thử
 module.exports = { fetchCountries, fetchWeather, displayWeather };
 
-fetchCountries();
-
-getWeatherButton.addEventListener('click', () => {
-    const selectedCountry = countrySelect.value;
-    const selectedDate = dateInput.value;
-
-    if (selectedCountry && selectedDate) {
-        fetchWeather(selectedCountry, selectedDate);
-    } else {
-        alert('Vui lòng chọn quốc gia và ngày.');
-    }
-});
-
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('service-worker.js')

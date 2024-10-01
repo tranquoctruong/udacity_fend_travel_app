@@ -11,13 +11,17 @@
         <p>Explore information about countries and weather!</p>
     </header>
     <main id="app">
-        <label for="country">Select a country:</label>
-        <select id="country"></select>
-    
-        <label for="date">Select Day:</label>
-        <input type="date" id="date" />
+        <div class="form-group">
+            <label for="country">Select a country:</label>
+            <select id="country"></select>
+        </div>
 
-        <button id="btn-getWeather">View weather</button>
+        <div class="form-group">
+            <label for="date">Select Day:</label>
+            <input type="date" id="date" />
+        </div>
+
+        <button id="btn-getWeather">View Weather</button>
 
         <h2>Weather Information</h2>
         <div id="div-weatherInfo"></div>

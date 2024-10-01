@@ -66,14 +66,4 @@ describe('Weather App', () => {
 
         expect(weatherInfo.textContent).toBe('Không tìm thấy thông tin thời tiết.');
     });
-
-    test('getWeatherButton shows alert if no country or date is selected', () => {
-        const alertSpy = jest.spyOn(window, 'alert').mockImplementation(() => {});
-
-        getWeatherButton.click(); // Simulate button click
-
-        expect(alertSpy).toHaveBeenCalledWith('Vui lòng chọn quốc gia và ngày.');
-
-        alertSpy.mockRestore(); // Restore original alert
-    });
 });

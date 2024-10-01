@@ -1,7 +1,7 @@
 const countrySelect = document.getElementById('country');
 const dateInput = document.getElementById('date');
-const weatherInfo = document.getElementById('weatherInfo');
-const getWeatherButton = document.getElementById('getWeather');
+const weatherInfo = document.getElementById('div-weatherInfo');
+const getWeatherButton = document.getElementById('btn-getWeather');
 
 // Lấy danh sách quốc gia từ server Node.js
 async function fetchCountries() {
@@ -15,7 +15,7 @@ async function fetchCountries() {
             countrySelect.appendChild(option);
         });
     } catch (error) {
-        console.error('Error fetching countries:', error);
+        console.log('Error fetching countries:', error);
     }
 }
 
@@ -44,17 +44,18 @@ function displayWeather(data) {
     }
 }
 
-// Thêm sự kiện cho nút xem thời tiết
-getWeatherButton.addEventListener('click', () => {
-    const selectedCountry = countrySelect.value;
-    const selectedDate = dateInput.value;
+// Xuất khẩu các hàm để có thể sử dụng trong kiểm thử
+module.exports = { fetchCountries, fetchWeather, displayWeather };
 
-    if (selectedCountry && selectedDate) {
-        fetchWeather(selectedCountry, selectedDate);
-    } else {
-        alert('Vui lòng chọn quốc gia và ngày.');
-    }
-});
-
-// Khởi động ứng dụng
 fetchCountries();
+
+    getWeatherButton.addEventListener('click', () => {
+        const selectedCountry = countrySelect.value;
+        const selectedDate = dateInput.value;
+
+        if (selectedCountry && selectedDate) {
+            fetchWeather(selectedCountry, selectedDate);
+        } else {
+            alert('Vui lòng chọn quốc gia và ngày.');
+        }
+    });
